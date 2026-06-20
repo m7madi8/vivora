@@ -3,23 +3,23 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 const articles = [
   {
     image: "/vivora.beauty.official-20260620-0007.jpg",
-    tag: "SKINCARE",
-    title: "Beauty Secrets From Around the World: Rituals & Ingredients You Need to Try",
-    date: "12 May, 2025",
+    tag: "BUNDLES",
+    title: "Glow Essentials Package: Your Full Skincare Routine in One Set",
+    date: "Limited Offer",
     bg: "#d4c4b0",
   },
   {
     image: "/vivora.beauty.official-20260620-0008.jpg",
-    tag: "WELLNESS",
-    title: "The Power of Natural Ingredients in Your Daily Body Care Routine",
-    date: "18 May, 2025",
+    tag: "PACKAGES",
+    title: "Deep Hydration Body Care Pack for Smooth & Soft Skin",
+    date: "Best Seller",
     bg: "#f0d4dc",
   },
   {
     image: "/vivora.beauty.official-20260620-0009.jpg",
-    tag: "GLOW",
-    title: "How to Choose the Right Skincare Products for Your Skin Type",
-    date: "24 May, 2025",
+    tag: "OFFERS",
+    title: "Travel Skincare Mini Kit: Everything You Need On the Go",
+    date: "New Drop",
     bg: "#ebe4d8",
   },
 ];
@@ -39,14 +39,15 @@ export default function JournalSection() {
             className="mt-1 block text-[28px] font-bold uppercase tracking-[0.04em]"
             style={{ fontFamily: "var(--font-inter), sans-serif" }}
           >
-            Journal
+            Bundles
           </span>
         </h2>
+
         <p
           className="mx-auto mt-3 max-w-[280px] text-[11px] leading-[1.55] text-white/60"
           style={{ fontFamily: "var(--font-inter), sans-serif" }}
         >
-          New tips and tricks for a radiant and healthy skin.
+          Discover curated skincare packages designed to simplify your routine and enhance your glow.
         </p>
       </div>
 
@@ -73,6 +74,7 @@ export default function JournalSection() {
                 {article.tag}
               </span>
             </div>
+
             <div className="p-4">
               <h3
                 className="text-[15px] font-semibold leading-[1.3] text-[#2a2a2a]"
@@ -80,6 +82,7 @@ export default function JournalSection() {
               >
                 {article.title}
               </h3>
+
               <div className="mt-3 flex items-center justify-between">
                 <span
                   className="text-[10px] text-[#888]"
@@ -87,12 +90,13 @@ export default function JournalSection() {
                 >
                   {article.date}
                 </span>
+
                 <button
                   type="button"
                   className="text-[10px] uppercase tracking-[0.08em] text-[#2a2a2a] underline underline-offset-2"
                   style={{ fontFamily: "var(--font-inter), sans-serif" }}
                 >
-                  Read more
+                  View pack
                 </button>
               </div>
             </div>
@@ -103,7 +107,7 @@ export default function JournalSection() {
       <div className="mt-8 flex flex-col items-center">
         <button
           type="button"
-          aria-label="See all articles"
+          aria-label="See all bundles"
           className="flex h-10 w-10 items-center justify-center rounded-full bg-white"
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -116,11 +120,12 @@ export default function JournalSection() {
             />
           </svg>
         </button>
+
         <span
           className="mt-2 text-[10px] uppercase tracking-[0.1em] text-white/70"
           style={{ fontFamily: "var(--font-inter), sans-serif" }}
         >
-          See All
+          See All Bundles
         </span>
       </div>
     </section>

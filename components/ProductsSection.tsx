@@ -5,7 +5,7 @@ const products = [
     image: "/2.jpg",
     label: "GLOW",
     name: "VITAMIN RICH BODY OIL",
-    price: "₹899",
+    price: "₪100",
     bg: "#e8ddd4",
     aspect: "3/4",
   },
@@ -13,7 +13,7 @@ const products = [
     image: "/3.jpg",
     label: "ESSENCE",
     name: "BODY BUTTER",
-    price: "₹899",
+    price: "₪100",
     bg: "#d9c8c4",
     aspect: "3/4",
   },
@@ -21,18 +21,11 @@ const products = [
     image: "/4.jpg",
     label: "ESSENCE",
     name: "SHOWER GEL WITH SCRUB EFFECT",
-    price: "₹799",
+    price: "₪110",
     bg: "#ddd2c8",
     aspect: "3/4",
   },
-  {
-    image: "/5.jpg",
-    label: "ESSENCE",
-    name: "SHOWER GEL",
-    price: "₹799",
-    bg: "#e5dbd3",
-    aspect: "3/4",
-  },
+
 ];
 
 function BagIcon() {
