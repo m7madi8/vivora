@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@config "../tailwind.config.ts";
+@import "../src/styles/tokens.css";
 
 :root {
   --hero-cream: #f2eeed;
@@ -15,7 +17,8 @@
 body {
   margin: 0;
   padding: 0;
-  background: #000;
+  background-color: var(--color-bg);
+  color: var(--color-bark);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

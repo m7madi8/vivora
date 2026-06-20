@@ -1,0 +1,27 @@
+:root {
+  /* ── Backgrounds ── */
+  --color-bg: #E2DBCA;
+  --color-cream: #F6F6EE;
+  --color-parchment: #ECEBE1;
+  --color-linen: #F8F5EE;
+
+  /* ── Browns ── */
+  --color-mocha: #92735E;
+  --color-walnut: #5F4F3D;
+  --color-umber: #A18F7C;
+  --color-driftwood: #BAA890;
+
+  /* ── Text ── */
+  --color-ink: #16140F; /* headlines */
+  --color-espresso: #4A4232; /* nav, subheadings */
+  --color-bark: #5F5549; /* body, product names */
+  --color-stone: #796A5B; /* muted, prices */
+
+  /* ── CTA ── */
+  --color-gold: #AE9A6C;
+  --color-champagne: #EDDCB0;
+
+  /* ── Footer ── */
+  --color-footer: #92735E;
+  --color-footer-text: #F5F5EC;
+}
