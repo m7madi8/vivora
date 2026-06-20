@@ -49,7 +49,7 @@ export default function SiteFooter() {
         className="mt-8 flex flex-wrap items-center justify-center gap-3 text-[9px] text-[#aaa]"
         style={{ fontFamily: "var(--font-inter), sans-serif" }}
       >
-        <span>© 2025 Vivora Beauty. All rights reserved.</span>
+        <span>© 2026 Vivora Beauty. All rights reserved.</span>
         <a href="#" className="underline underline-offset-2">
           Privacy Policy
         </a>
