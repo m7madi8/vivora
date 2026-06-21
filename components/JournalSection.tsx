@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useRef, useState } from "react";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const articles = [
@@ -25,109 +28,190 @@ const articles = [
 ];
 
 export default function JournalSection() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [progress, setProgress] = useState(0);
+
+  /* 🎬 Scroll reveal */
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+
+      const rect = ref.current.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      const value = 1 - rect.top / vh;
+      setProgress(Math.max(0, Math.min(1, value)));
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <section className="bg-[#1f1f1f] px-4 pb-12 pt-10 text-white">
-      <div className="mb-8 text-center">
+    <section
+      ref={ref}
+      className="bg-[#1f1f1f] px-4 pb-16 pt-14 text-white overflow-hidden"
+    >
+
+      {/* 💎 HEADER */}
+      <div className="mb-10 text-center">
+
         <h2 className="leading-none">
+
           <span
-            className="block text-[34px] italic text-white/90"
-            style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400 }}
+            style={{
+              transform: `translateY(${(1 - progress) * 25}px)`,
+              opacity: progress
+            }}
+            className="block text-[38px] italic text-white/90 transition"
           >
             clean
           </span>
+
           <span
-            className="mt-1 block text-[28px] font-bold uppercase tracking-[0.04em]"
-            style={{ fontFamily: "var(--font-inter), sans-serif" }}
+            style={{
+              transform: `translateY(${(1 - progress) * 35}px)`,
+              opacity: progress
+            }}
+            className="mt-1 block text-[30px] font-bold uppercase tracking-[0.08em] transition"
           >
             Bundles
           </span>
+
         </h2>
 
         <p
-          className="mx-auto mt-3 max-w-[280px] text-[11px] leading-[1.55] text-white/60"
-          style={{ fontFamily: "var(--font-inter), sans-serif" }}
+          style={{
+            transform: `translateY(${(1 - progress) * 40}px)`,
+            opacity: progress
+          }}
+          className="mx-auto mt-4 max-w-[280px] text-[11px] leading-[1.6] text-white/60"
         >
-          Discover curated skincare packages designed to simplify your routine and enhance your glow.
+          Curated skincare sets designed for effortless routines and lasting glow.
         </p>
+
       </div>
 
-      <div className="space-y-5">
-        {articles.map((article) => (
+      {/* 💣 CARDS */}
+      <div className="space-y-6">
+
+        {articles.map((article, i) => (
+
           <article
             key={article.title}
-            className="overflow-hidden rounded-[12px] bg-white text-[#2a2a2a] shadow-[0_16px_40px_rgba(0,0,0,0.2)]"
+            className="group relative overflow-hidden rounded-[16px] bg-white text-[#2a2a2a]"
+            style={{
+              transform: `translateY(${(1 - progress) * (60 + i * 20)}px)`,
+              opacity: progress,
+              transition: "all 0.5s ease-out"
+            }}
           >
-            <div className="relative">
-              <ResponsiveImage
-                src={article.image}
-                alt={article.title}
-                width={1200}
-                height={900}
-                bg={article.bg}
-                rounded="rounded-none"
-                className="shadow-none"
-              />
-              <span
-                className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-[8px] tracking-[0.08em] text-[#555] shadow-sm"
-                style={{ fontFamily: "var(--font-inter), sans-serif" }}
-              >
+
+            {/* SHADOW DEPTH */}
+            <div className="
+              absolute inset-0
+              translate-y-8 scale-[0.95]
+              rounded-[16px]
+              bg-black/20 blur-2xl opacity-40
+              transition-all duration-500
+              group-hover:translate-y-10 group-hover:opacity-60
+            "/>
+
+            {/* IMAGE */}
+            <div className="relative overflow-hidden">
+
+              <div className="
+                transition-all duration-700
+                group-hover:scale-[1.05]
+              ">
+                <ResponsiveImage
+                  src={article.image}
+                  alt={article.title}
+                  width={1200}
+                  height={900}
+                  bg={article.bg}
+                  rounded="rounded-none"
+                  className="shadow-none"
+                />
+              </div>
+
+              {/* TAG */}
+              <span className="
+                absolute left-3 top-3
+                rounded-full bg-white px-3 py-1
+                text-[8px] tracking-[0.08em]
+                text-[#555]
+                shadow-sm
+                transition
+                group-hover:scale-105
+              ">
                 {article.tag}
               </span>
+
+              {/* GRADIENT OVERLAY */}
+              <div className="
+                absolute inset-0
+                bg-gradient-to-t from-black/20 to-transparent
+                opacity-0 group-hover:opacity-100
+                transition
+              "/>
+
             </div>
 
+            {/* TEXT */}
             <div className="p-4">
-              <h3
-                className="text-[15px] font-semibold leading-[1.3] text-[#2a2a2a]"
-                style={{ fontFamily: "var(--font-inter), sans-serif" }}
-              >
+
+              <h3 className="
+                text-[15px] font-semibold leading-[1.35]
+                transition group-hover:translate-y-[-2px]
+              ">
                 {article.title}
               </h3>
 
               <div className="mt-3 flex items-center justify-between">
-                <span
-                  className="text-[10px] text-[#888]"
-                  style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                >
+
+                <span className="text-[10px] text-[#888]">
                   {article.date}
                 </span>
 
-                <button
-                  type="button"
-                  className="text-[10px] uppercase tracking-[0.08em] text-[#2a2a2a] underline underline-offset-2"
-                  style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                >
-                  View pack
+                <button className="
+                  text-[10px] uppercase tracking-[0.08em]
+                  underline underline-offset-2
+                  transition group-hover:translate-x-1
+                ">
+                  View pack →
                 </button>
+
               </div>
+
             </div>
+
           </article>
+
         ))}
+
       </div>
 
-      <div className="mt-8 flex flex-col items-center">
-        <button
-          type="button"
-          aria-label="See all bundles"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-white"
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path
-              d="M3 8H13M13 8L9 4M13 8L9 12"
-              stroke="#2a2a2a"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+      {/* 💎 CTA */}
+      <div className="mt-10 flex flex-col items-center">
+
+        <button className="
+          flex h-11 w-11
+          items-center justify-center
+          rounded-full bg-white text-black
+          transition hover:scale-110
+        ">
+          →
         </button>
 
-        <span
-          className="mt-2 text-[10px] uppercase tracking-[0.1em] text-white/70"
-          style={{ fontFamily: "var(--font-inter), sans-serif" }}
-        >
+        <span className="mt-2 text-[10px] uppercase tracking-[0.1em] text-white/70">
           See All Bundles
         </span>
+
       </div>
+
     </section>
   );
 }

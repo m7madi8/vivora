@@ -108,23 +108,72 @@ export default function ProductsSection() {
       <div className="no-scrollbar overflow-x-auto pl-4 pr-3">
         <div className="flex snap-x snap-mandatory gap-3">
           {products.map((product) => (
-            <article
-              key={product.image}
-              className="w-[min(78vw,260px)] shrink-0 snap-center overflow-hidden rounded-[14px] shadow-[0_12px_32px_rgba(30,28,26,0.08)]"
-              style={{ backgroundColor: product.bg }}
+        <article
+        key={product.image}
+        className="
+          group
+          relative
+          w-[min(78vw,260px)]
+          shrink-0
+          snap-center
+          [perspective:1000px]
+        "
+      >
+        {/* Elevation shadow (realistic depth) */}
+        <div className="absolute inset-0 translate-y-6 scale-[0.94] rounded-[22px] bg-black/10 blur-2xl opacity-40 transition-all duration-700 group-hover:translate-y-8 group-hover:blur-3xl group-hover:opacity-60"></div>
+      
+        {/* Main card */}
+        <div
+          className="
+            relative
+            overflow-hidden
+            rounded-[22px]
+            transition-all duration-700 ease-out
+            will-change-transform
+            group-hover:[transform:rotateX(3deg)_rotateY(-3deg)_scale(1.02)]
+          "
+          style={{
+            backgroundColor: product.bg,
+            transformStyle: "preserve-3d",
+          }}
+        >
+          {/* Inner surface layer */}
+          <div className="relative z-10 h-full w-full">
+      
+            {/* TOP BAR */}
+            <div className="flex items-center justify-between p-3 pb-2">
+              <span
+                className="
+                  rounded-full
+                  bg-white/90
+                  px-4 py-1
+                  text-[8px]
+                  tracking-[0.12em]
+                  text-[#555]
+                  backdrop-blur
+                  transition
+                  group-hover:scale-105
+                "
+                style={{ fontFamily: "var(--font-inter), sans-serif" }}
+              >
+                {product.label}
+              </span>
+      
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-[0_4px_10px_rgba(0,0,0,0.12)] transition-all duration-300 group-hover:scale-110">
+                <BagIcon />
+              </span>
+            </div>
+      
+            {/* IMAGE */}
+            <div
+              className="
+                relative
+                z-10
+                transition-all duration-700
+                group-hover:translate-y-[-4px]
+                group-hover:scale-[1.07]
+              "
             >
-              <div className="flex items-center justify-between p-3 pb-2">
-                <span
-                  className="rounded-full bg-white px-4 py-1 text-[8px] tracking-[0.08em] text-[#555]"
-                  style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                >
-                  {product.label}
-                </span>
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/90">
-                  <BagIcon />
-                </span>
-              </div>
-
               <ResponsiveImageFrame
                 src={product.image}
                 alt={product.name}
@@ -135,22 +184,54 @@ export default function ProductsSection() {
                 sizes="78vw"
                 fit="cover"
               />
-
-              <div className="flex items-end justify-between gap-3 p-3 pt-2">
-                <p
-                  className="max-w-[70%] text-[10.5px] leading-[1.22] text-[#4b4b4b]"
-                  style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 400 }}
-                >
-                  {product.name}
-                </p>
-                <span
-                  className="shrink-0 text-[11px] text-[#4b4b4b]"
-                  style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                >
-                  {product.price}
-                </span>
-              </div>
-            </article>
+            </div>
+      
+            {/* BOTTOM */}
+            <div className="flex items-end justify-between gap-3 p-3 pt-3">
+              <p
+                className="
+                  max-w-[70%]
+                  text-[11.5px]
+                  leading-[1.28]
+                  text-[#3e3e3e]
+                  tracking-[-0.01em]
+                "
+                style={{ fontFamily: "var(--font-inter), sans-serif" }}
+              >
+                {product.name}
+              </p>
+      
+              <span
+                className="
+                  shrink-0
+                  text-[12.5px]
+                  text-[#2c2c2c]
+                  font-medium
+                  tracking-[0.01em]
+                "
+                style={{ fontFamily: "var(--font-inter), sans-serif" }}
+              >
+                {product.price}
+              </span>
+            </div>
+          </div>
+      
+          {/* Light reflection (top gloss) */}
+          <div className="
+            pointer-events-none
+            absolute
+            inset-0
+            rounded-[22px]
+            bg-[linear-gradient(120deg,rgba(255,255,255,0.35),transparent_40%)]
+            opacity-40
+            transition-all duration-700
+            group-hover:opacity-60
+          "></div>
+      
+          {/* Edge highlight */}
+          <div className="pointer-events-none absolute inset-0 rounded-[22px] ring-1 ring-white/50"></div>
+        </div>
+      </article>
           ))}
         </div>
       </div>

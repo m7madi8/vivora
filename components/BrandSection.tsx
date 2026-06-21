@@ -1,164 +1,195 @@
+'use client'
+
+import { useEffect, useRef, useState } from "react";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import DecorativeArc from "@/components/DecorativeArc";
+
+export default function BrandSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let frame: number;
+
+    const handleScroll = () => {
+      cancelAnimationFrame(frame);
+
+      frame = requestAnimationFrame(() => {
+        if (!ref.current) return;
+
+        const rect = ref.current.getBoundingClientRect();
+        const vh = window.innerHeight;
+
+        const value = 1 - rect.top / vh;
+        setProgress(Math.max(0, Math.min(1, value)));
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const features = [
+    { icon: LeafIcon, title: "Clean, Beyond", sub: "Reproach" },
+    { icon: MagnifierIcon, title: "Radical", sub: "Transparency" },
+    { icon: FlaskIcon, title: "Potent & Multi", sub: "Tasking" },
+    { icon: HeartHandIcon, title: "Conscious &", sub: "Responsible" },
+  ];
+
+  return (
+    <section ref={ref} className="bg-[#efefef] pb-20 pt-20 overflow-hidden">
+
+      {/* HEADER */}
+      <div className="px-6">
+
+        <h2 className="text-[36px] uppercase leading-[1.1] text-[#3a3a3a]">
+
+          {["CLEAN,", "CONSCIOUS,", "PERFORMANCE"].map((word, i) => (
+            <span
+              key={i}
+              className="block"
+              style={{
+                transform: `translateY(${(1 - progress) * (40 + i * 10)}px)`,
+                opacity: progress,
+                filter: `blur(${(1 - progress) * 6}px)`,
+                transition: "all 0.25s ease-out"
+              }}
+            >
+              {word}
+            </span>
+          ))}
+
+        </h2>
+
+        <p className="mt-2 text-[36px] italic text-[#3a3a3a]">
+          <span
+            style={{
+              transform: `translateY(${(1 - progress) * 50}px)`,
+              opacity: progress,
+              filter: `blur(${(1 - progress) * 6}px)`,
+              transition: "all 0.3s ease-out"
+            }}
+          >
+            skincare.
+          </span>
+        </p>
+
+        {/* ARC */}
+        <div
+          className="mt-8 flex items-start justify-between gap-6"
+          style={{
+            transform: `translateY(${(1 - progress) * 60}px)`,
+            opacity: progress,
+          }}
+        >
+          <DecorativeArc />
+
+          <p className="max-w-[180px] text-right text-[12px] leading-[1.6] text-[#6f6f6f]">
+            Unreservedly honest products that truly work, be kind to skin and the planet – no exceptions!
+          </p>
+        </div>
+
+      </div>
+
+      {/* IMAGE */}
+      <div className="mt-14 px-4">
+        <div
+          className="overflow-hidden rounded-[60%_40%_60%_40%/60%_40%_60%_40%]"
+          style={{
+            transform: `translateY(${progress * -40}px) scale(${0.95 + progress * 0.05})`,
+            transition: "transform 0.2s ease-out"
+          }}
+        >
+          <ResponsiveImage
+            src="/vivora.beauty.jpg"
+            alt="Vivora Beauty"
+            width={1080}
+            height={1350}
+            bg="#f0e4dc"
+          />
+        </div>
+      </div>
+
+      {/* FEATURES */}
+      <div className="mt-14 grid grid-cols-2 gap-px bg-[#dcdcdc]">
+
+        {features.map((item, i) => {
+          const Icon = item.icon; // ✅ الحل الصحيح
+
+          return (
+            <div
+              key={i}
+              className="
+                flex flex-col items-center justify-center
+                bg-[#efefef] px-5 py-10 text-center
+                transition-all duration-500 hover:bg-white
+              "
+              style={{
+                transform: `translateY(${(1 - progress) * (60 + i * 20)}px)`,
+                opacity: progress,
+              }}
+            >
+              <div className="
+                mb-4 flex h-[64px] w-[64px]
+                items-center justify-center
+                rounded-full bg-white
+                shadow-[0_6px_20px_rgba(0,0,0,0.05)]
+              ">
+                <Icon />
+              </div>
+
+              <p className="text-[13px] text-[#3a3a3a] leading-[1.4]">
+                {item.title} <br /> {item.sub}
+              </p>
+            </div>
+          );
+        })}
+
+      </div>
+
+    </section>
+  );
+}
+
+/* ✅ ICONS PREMIUM */
 
 function LeafIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-      <path
-        d="M11 19C11 19 3 14 3 8.5C3 5.5 5.5 3 8.5 3C9.5 3 10.5 3.3 11.5 4C12.5 3.3 13.5 3 14.5 3C17.5 3 20 5.5 20 8.5C20 14 11 19 11 19Z"
-        stroke="#2a2a2a"
-        strokeWidth="1.2"
-        strokeLinejoin="round"
-      />
-      <path d="M11 19V8" stroke="#2a2a2a" strokeWidth="1.2" strokeLinecap="round" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M20 4C14 4 6 6 6 14C6 16 7 18 8 19C8 15 10 10 20 4Z" stroke="#2a2a2a" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
 
 function MagnifierIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-      <circle cx="9.5" cy="9.5" r="5.5" stroke="#2a2a2a" strokeWidth="1.2" />
-      <path d="M14 14L19 19" stroke="#2a2a2a" strokeWidth="1.2" strokeLinecap="round" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <circle cx="10.5" cy="10.5" r="5" stroke="#2a2a2a" strokeWidth="1.3"/>
+      <path d="M15 15L20 20" stroke="#2a2a2a" strokeWidth="1.3" strokeLinecap="round"/>
     </svg>
   );
 }
 
 function FlaskIcon() {
   return (
-    <svg width="20" height="22" viewBox="0 0 20 22" fill="none" aria-hidden="true">
-      <path
-        d="M7 2H13M9 2V8L4 18.5C3.5 19.5 4.2 20.5 5.3 20.5H14.7C15.8 20.5 16.5 19.5 16 18.5L11 8V2"
-        stroke="#2a2a2a"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M6 14H14" stroke="#2a2a2a" strokeWidth="1.2" strokeLinecap="round" />
+    <svg width="20" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M9 3H15M10 3V9L5 19C4.5 20 5.2 21 6.3 21H17.7C18.8 21 19.5 20 19 19L14 9V3" stroke="#2a2a2a" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M8 14H16" stroke="#2a2a2a" strokeWidth="1.3" strokeLinecap="round"/>
     </svg>
   );
 }
 
 function HeartHandIcon() {
   return (
-    <svg width="24" height="22" viewBox="0 0 24 22" fill="none" aria-hidden="true">
-      <path
-        d="M8 14C6 12.5 4 10.5 4 8.5C4 6.5 5.5 5 7.5 5C8.5 5 9.5 5.5 10 6.5C10.5 5.5 11.5 5 12.5 5C14.5 5 16 6.5 16 8.5C16 10.5 14 12.5 12 14L10 16L8 14Z"
-        stroke="#2a2a2a"
-        strokeWidth="1.2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M3 18C3 18 5 16 8 16C11 16 13 18 13 18"
-        stroke="#2a2a2a"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
+    <svg width="24" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M12 16L10 14C8 12.5 6 10.5 6 9C6 7.5 7 6.5 8.5 6.5C9.5 6.5 10.5 7 11 8C11.5 7 12.5 6.5 13.5 6.5C15 6.5 16 7.5 16 9C16 10.5 14 12.5 12 14" stroke="#2a2a2a" strokeWidth="1.3"/>
+      <path d="M4 20C4 20 6 18 9 18C12 18 14 20 14 20" stroke="#2a2a2a" strokeWidth="1.3" strokeLinecap="round"/>
     </svg>
   );
 }
-
-function DecorativeArc() {
-  return (
-    <svg
-      width="90"
-      height="90"
-      viewBox="0 0 90 90"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="shrink-0"
-      aria-hidden="true"
-    >
-      <path
-        d="M75 15C55 15 15 35 15 75"
-        stroke="#1a1a1a"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-        fill="none"
-      />
-    </svg>
-  );
-}
-
-const features = [
-  { icon: LeafIcon, lines: ["Clean, Beyond", "Reproach"] },
-  { icon: MagnifierIcon, lines: ["Radical", "Transparency"] },
-  { icon: FlaskIcon, lines: ["Potent & Multi", "Tasking"] },
-  { icon: HeartHandIcon, lines: ["Conscious &", "Responsible"] },
-];
-
-export default function BrandSection() {
-  return (
-    <section className="bg-[#f5f5f5]">
-      <div className="px-6 pt-10">
-        {/* Headline */}
-        <h2
-          className="text-[30px] font-bold uppercase leading-[1.14] tracking-[-0.01em] text-[#3a3a3a]"
-          style={{ fontFamily: "var(--font-inter), sans-serif" }}
-        >
-          Clean,
-          <br />
-          Conscious,
-          <br />
-          Performance
-        </h2>
-        <p
-          className="mt-1 text-[30px] italic text-[#3a3a3a] underline decoration-[#3a3a3a] decoration-1 underline-offset-[5px]"
-          style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400 }}
-        >
-          skincare.
-        </p>
-
-        {/* Arc + subtext */}
-        <div className="mt-3 flex items-start justify-between gap-3">
-          <div className="pt-2 pl-1">
-            <DecorativeArc />
-          </div>
-          <p
-            className="max-w-[175px] pt-6 text-right text-[11.5px] leading-[1.55] text-[#7a7a7a]"
-            style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 400 }}
-          >
-            Unreservedly honest products that truly work, be kind to skin and the planet – no
-            exceptions!
-          </p>
-        </div>
-      </div>
-
-      {/* Brand image — full visible, responsive */}
-      <div className="px-4 pb-4 pt-6">
-        <ResponsiveImage
-          src="/vivora.beauty.jpg"
-          alt="Woman with radiant natural skin"
-          width={1080}
-          height={1350}
-          bg="#f0e4dc"
-          rounded="rounded-[36px]"
-          className="mx-auto max-w-full"
-        />
-      </div>
-
-      {/* Feature grid */}
-      <div className="grid grid-cols-2 border-t border-[#e0e0e0] bg-[#f5f5f5]">
-        {features.map(({ icon: Icon, lines }, index) => (
-          <div
-            key={lines.join("-")}
-            className={`flex flex-col items-center px-4 py-9 text-center ${
-              index % 2 === 0 ? "border-r border-[#e0e0e0]" : ""
-            } ${index < 2 ? "border-b border-[#e0e0e0]" : ""}`}
-          >
-            <div className="mb-4 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
-              <Icon />
-            </div>
-            <p
-              className="text-[12.5px] leading-[1.35] text-[#4a4a4a]"
-              style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 400 }}
-            >
-              {lines[0]}
-              <br />
-              {lines[1]}
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+``
