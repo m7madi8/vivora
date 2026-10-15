@@ -2,50 +2,517 @@
 @config "../tailwind.config.ts";
 @import "../src/styles/tokens.css";
 
-:root {
-  --hero-cream: #f2eeed;
-  --hero-dark: #2a2a2a;
-  --font-brand: "Montserrat", system-ui, sans-serif;
-  --font-cormorant: "Cormorant Garamond", serif;
-  --font-inter: "Inter", sans-serif;
-}
-
-.font-brand {
-  font-family: var(--font-brand);
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + var(--gutter));
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  padding: 0;
-  background-color: var(--color-bg);
-  color: var(--color-bark);
+  overflow-x: clip;
+  background-color: var(--color-linen);
+  color: var(--color-ink);
+  font-family: var(--font-dm), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+::selection {
+  background: var(--color-sand);
+  color: var(--color-ink);
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+/* Visible keyboard focus everywhere; colour follows the surface it sits on. */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-.image-showcase {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  box-shadow: 0 24px 48px rgba(30, 28, 26, 0.1);
+@layer components {
+  /* ── Layout ── */
+  .page-x {
+    padding-inline: var(--gutter);
+  }
+
+  .panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+    isolation: isolate;
+  }
+
+  /* ── Type roles ── */
+  .t-display {
+    font-weight: 500;
+    font-size: clamp(3.25rem, 1.9rem + 5.2vw, 7.75rem);
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+
+  .t-h2 {
+    font-weight: 500;
+    font-size: clamp(2.125rem, 1.5rem + 2.6vw, 4.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .t-h3 {
+    font-weight: 500;
+    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.625rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  /* One emotional word per headline. */
+  .t-accent {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Echoes the wide capitals printed on the packaging. */
+  .t-label {
+    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1.3;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .t-lede {
+    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    border-radius: 999px;
+    padding-inline: 1.5rem;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-linen);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-walnut);
+  }
+
+  .btn-light {
+    background: var(--color-linen);
+    color: var(--color-ink);
+  }
+
+  .btn-light:hover {
+    background: var(--color-cream);
+  }
+
+  .btn-outline {
+    border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  }
+
+  .btn-outline:hover {
+    border-color: currentColor;
+    background: color-mix(in srgb, currentColor 6%, transparent);
+  }
+
+  .btn .btn-arrow {
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  .icon-btn {
+    display: inline-flex;
+    height: 44px;
+    min-width: 44px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .stepper-btn {
+    display: inline-flex;
+    height: 44px;
+    width: 40px;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .stepper-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+  }
+
+  .link-underline {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: calc(50% - 0.8em);
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .link-underline:hover::after,
+  .link-underline[aria-current="true"]::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Add-to-bag confirmation: the label rolls to "Added" without resizing the button. */
+  .add-btn-label {
+    display: grid;
+    overflow: hidden;
+    height: 1.4em;
+  }
+
+  .add-btn-label > span {
+    grid-area: 1 / 1;
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      opacity var(--dur-base) var(--ease-out);
+  }
+
+  .add-btn-label > span:last-child {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  .add-btn[data-added] {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-linen);
+  }
+
+  .add-btn[data-added] .add-btn-label > span:first-child {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  .add-btn[data-added] .add-btn-label > span:last-child {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* ── Media ── */
+  .media-zoom {
+    transition: transform 1.2s var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .group:hover .media-zoom {
+      transform: scale(1.035);
+    }
+  }
+
+  .video-toggle {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    z-index: 2;
+    display: inline-flex;
+    height: 44px;
+    width: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-ink) 35%, transparent);
+    color: var(--color-linen);
+    cursor: pointer;
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .video-toggle:hover {
+    background: color-mix(in srgb, var(--color-ink) 60%, transparent);
+  }
+
+  .scroll-row {
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+
+  .scroll-row::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-.image-frame {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  box-shadow: 0 16px 36px rgba(30, 28, 26, 0.08);
+/* ── Skip link ── */
+.skip-link {
+  position: fixed;
+  left: 12px;
+  top: -64px;
+  z-index: 60;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-linen);
+  padding: 12px 18px;
+  font-size: 14px;
+  transition: top var(--dur-base) var(--ease-out);
 }
 
-.image-frame.shadow-none {
-  box-shadow: none;
+.skip-link:focus {
+  top: 12px;
+}
+
+/* ── Hero: copy overlays the film on small screens, takes its own panel on large ones ── */
+.hero-grid {
+  display: grid;
+  grid-template-areas: "stack";
+  height: calc(100svh - var(--header-h) - var(--gutter));
+  min-height: 34rem;
+  max-height: 64rem;
+}
+
+.hero-media,
+.hero-copy {
+  grid-area: stack;
+}
+
+.hero-copy {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem max(1.25rem, env(safe-area-inset-bottom));
+  color: var(--color-linen);
+}
+
+.hero-media .video-toggle {
+  top: 0.75rem;
+  bottom: auto;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-areas: "media copy";
+    grid-template-columns: 5fr 7fr;
+    gap: var(--gutter);
+  }
+
+  .hero-media {
+    grid-area: media;
+  }
+
+  .hero-media .video-toggle {
+    top: auto;
+    bottom: 0.75rem;
+  }
+
+  .hero-copy {
+    grid-area: copy;
+    justify-content: space-between;
+    border-radius: var(--radius);
+    background: var(--color-sand);
+    padding: var(--pad);
+    color: var(--color-ink);
+  }
+
+  .hero-cta {
+    background: var(--color-ink);
+    color: var(--color-linen);
+  }
+
+  .hero-cta:hover {
+    background: var(--color-walnut);
+  }
+}
+
+/* ── Footer wordmark spans the content width ── */
+.footer-mark {
+  font-size: min(calc((100vw - 2 * var(--gutter)) / 4.22), calc(var(--max-w) / 4.22));
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+}
+
+/* ── Header ── */
+.site-header {
+  transition: transform 0.45s var(--ease-out);
+}
+
+.site-header[data-hidden] {
+  transform: translateY(-100%);
+}
+
+@keyframes bump {
+  40% {
+    transform: scale(1.35);
+  }
+}
+
+.bag-count[data-bump] {
+  animation: bump 0.45s var(--ease-out);
+}
+
+/* ── Entrance (first viewport): transform + opacity only ── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes unveil {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.rise {
+  animation: rise 1s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.settle {
+  animation: settle 2.6s var(--ease-out) both;
+}
+
+.unveil {
+  animation: unveil 1.2s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Scroll-linked reveal; browsers without view timelines show content as-is. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 30%;
+    }
+
+    .reveal-media {
+      animation: settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 55%;
+    }
+  }
+}
+
+/* ── Drawers (native <dialog>) ── */
+dialog.drawer {
+  position: fixed;
+  inset: 0 auto 0 auto;
+  margin: 0;
+  height: 100dvh;
+  max-height: none;
+  width: min(100vw, 26rem);
+  max-width: none;
+  border: none;
+  padding: 0;
+}
+
+dialog.drawer-right {
+  inset-inline: auto 0;
+}
+
+dialog.drawer-left {
+  inset-inline: 0 auto;
+}
+
+dialog.drawer::backdrop {
+  background: color-mix(in srgb, var(--color-ink) 45%, transparent);
+}
+
+@keyframes drawerInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes drawerInLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+dialog.drawer-right[open] {
+  animation: drawerInRight 0.5s var(--ease-out);
+}
+
+dialog.drawer-left[open] {
+  animation: drawerInLeft 0.5s var(--ease-out);
+}
+
+dialog.drawer[open]::backdrop {
+  animation: unveil 0.4s var(--ease-out);
+}
+
+/* Users who ask for less motion get the final state immediately. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

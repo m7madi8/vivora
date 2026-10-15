@@ -1,134 +1,86 @@
-'use client'
+import Image from "next/image";
+import type { CSSProperties } from "react";
+import AmbientVideo from "@/components/AmbientVideo";
+import { ArrowIcon } from "@/components/icons";
+import { formatPrice, lines, products } from "@/lib/products";
 
-import { useEffect, useState } from "react";
-import BrandLogo from "@/components/BrandLogo";
+const delay = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
 export default function Hero() {
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      setLoaded(true);
-    });
-  }, []);
-
   return (
-    <section className="relative h-[100dvh] w-full overflow-hidden">
-
-      {/* VIDEO */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        className={`
-          absolute inset-0 h-full w-full object-cover
-          transition-all duration-[2000ms] ease-out
-          ${loaded ? "opacity-100 scale-100" : "opacity-0 scale-110"}
-        `}
-      >
-        <source src="/hero.mp4" type="video/mp4" />
-      </video>
-
-      {/* OVERLAY */}
-      <div className={`
-        absolute inset-0 bg-black/30
-        transition-opacity duration-1000
-        ${loaded ? "opacity-100" : "opacity-0"}
-      `} />
-
-      {/* CONTENT */}
-      <div className="relative z-10 flex h-full flex-col px-5">
-
-        {/* HEADER */}
-        <header className={`
-          flex items-center justify-between pt-5
-          transition-all duration-1000
-          ${loaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"}
-        `}>
-
-          <button className="flex h-10 w-10 flex-col justify-center gap-[6px]">
-            <span className="h-[1.5px] w-[22px] bg-white" />
-            <span className="h-[1.5px] w-[22px] bg-white" />
-          </button>
-
-          <h1 className="text-white">
-            <BrandLogo className="text-[1.15rem] tracking-[0.18em]" />
-          </h1>
-
-          <button className="h-10 w-10 flex items-center justify-end">
-            🛍️
-          </button>
-
-        </header>
-
-        {/* HERO TEXT */}
-        <div className="flex flex-1 flex-col items-center justify-center pb-28 text-center">
-
-          <h2 className="max-w-[80%] text-white leading-[1.05]">
-
-            {/* LINE 1 */}
-            <span className={`
-              block mb-4 text-[18px] uppercase tracking-[0.35em]
-              transition-all duration-1000 delay-200
-              ${loaded ? "opacity-80 translate-y-0 blur-0" : "opacity-0 translate-y-6 blur"}
-            `}>
-              Your Daily Ritual
-            </span>
-
-            {/* LINE 2 */}
-            <span className={`
-              block text-[44px] font-medium tracking-[-0.02em]
-              transition-all duration-1000 delay-[500ms]
-              ${loaded ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-6 blur-sm"}
-            `}>
-              Soft. Honest.
-            </span>
-
-            {/* LINE 3 */}
-            <span
-  className={`
-    block mt-1
-    text-[62px]
-    font-semibold
-    tracking-[-0.05em]
-    leading-[1]
-    text-white
-    drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]
-    transition-all duration-1000 delay-[800ms]
-    ${loaded ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-10 scale-[0.95]"}
-  `}
->
-  Care
-</span>
-
-          </h2>
-
+    <section id="top" aria-labelledby="hero-title" className="page-x">
+      <div className="hero-grid mx-auto max-w-site">
+        <div className="hero-media panel bg-vivora-walnut">
+          <AmbientVideo
+            src="/hero.mp4"
+            poster="/posters/hero.jpg"
+            eager
+            label="Essence shower gel film"
+            className="settle"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-black/0 lg:hidden"
+          />
         </div>
 
-        {/* CTA */}
-        <div className="absolute bottom-9 left-5 right-5">
+        <div className="hero-copy">
+          <div className="flex items-start justify-between gap-6">
+            <p className="t-label rise" style={delay(100)}>
+              Your beauty code
+            </p>
+            <p className="t-label hidden text-vivora-espresso rise lg:block" style={delay(100)}>
+              Glow <span aria-hidden="true">/</span> Essence
+            </p>
+          </div>
 
-          <button className={`
-            flex h-[52px] w-full items-center justify-between
-            rounded-full bg-[#f2eeed] pl-7 pr-1
-            transition-all duration-1000 delay-[1000ms]
-            ${loaded ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-[0.9]"}
-          `}>
+          <div className="mt-auto lg:mt-0">
+            <h1 id="hero-title" className="t-display">
+              <span className="block rise" style={delay(200)}>
+                Soft. Honest.
+              </span>{" "}
+              <span className="t-accent block text-[1.12em] leading-[0.85] rise" style={delay(320)}>
+                care.
+              </span>
+            </h1>
 
-            <span className="text-[10.5px] tracking-[0.16em] text-[#2a2a2a] underline underline-offset-[4px]">
-              EXPLORE ALL PRODUCTS
-            </span>
+            <p className="t-lede mt-5 max-w-[30ch] rise lg:mt-7 lg:text-vivora-espresso" style={delay(440)}>
+              Body care in two lines, Glow and Essence. True to oneself, kind to nature.
+            </p>
 
-            <span className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#2a2a2a]">
-              →
-            </span>
+            <div className="mt-7 flex flex-col gap-1 rise sm:flex-row sm:gap-3 lg:mt-9" style={delay(540)}>
+              <a href="#shop" className="btn btn-light hero-cta w-full sm:w-auto">
+                Shop the collection
+                <span className="btn-arrow">
+                  <ArrowIcon />
+                </span>
+              </a>
+              <a href="#story" className="btn btn-outline hidden sm:inline-flex">
+                Our story
+              </a>
+              <a href="#story" className="flex min-h-11 items-center justify-center text-[14px] underline underline-offset-4 sm:hidden">
+                Our story
+              </a>
+            </div>
+          </div>
 
-          </button>
-
+          <ul className="mt-10 hidden grid-cols-3 gap-5 border-t border-vivora-ink/15 pt-5 unveil lg:grid" style={delay(700)}>
+            {products.map((product) => (
+              <li key={product.id}>
+                <a href={`#${product.id}`} className="group flex items-center gap-3">
+                  <span className="relative aspect-[4/5] w-12 shrink-0 overflow-hidden rounded-[var(--radius-sm)] bg-vivora-linen/40">
+                    <Image src={product.image} alt="" fill sizes="48px" className="media-zoom object-cover" />
+                  </span>
+                  <span className="min-w-0 text-[13px] leading-[1.35]">
+                    <span className="block text-vivora-espresso">{lines[product.line].name}</span>
+                    <span className="block font-medium group-hover:underline">{product.name}</span>
+                    <span className="tabular block text-vivora-espresso">{formatPrice(product.price)}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-
       </div>
     </section>
   );

@@ -1,27 +1,47 @@
 :root {
-  /* ── Backgrounds ── */
-  --color-bg: #E2DBCA;
+  /* ── Surfaces ── */
+  --color-linen: #F8F5EE; /* page */
   --color-cream: #F6F6EE;
   --color-parchment: #ECEBE1;
-  --color-linen: #F8F5EE;
+  --color-bg: #E2DBCA; /* story panel */
+  --color-sand: #D6AA8D; /* studio backdrop of the product photography */
+  --color-glow: #EEE5DE; /* Glow packaging */
 
   /* ── Browns ── */
   --color-mocha: #92735E;
-  --color-walnut: #5F4F3D;
+  --color-walnut: #5F4F3D; /* Essence panel, dark surfaces */
   --color-umber: #A18F7C;
   --color-driftwood: #BAA890;
 
   /* ── Text ── */
   --color-ink: #16140F; /* headlines */
-  --color-espresso: #4A4232; /* nav, subheadings */
-  --color-bark: #5F5549; /* body, product names */
-  --color-stone: #796A5B; /* muted, prices */
+  --color-espresso: #4A4232; /* subheadings */
+  --color-bark: #5F5549; /* body */
+  --color-stone: #796A5B; /* muted */
 
-  /* ── CTA ── */
+  /* ── Accents ── */
   --color-gold: #AE9A6C;
   --color-champagne: #EDDCB0;
+  --color-error: #9B2C1F;
 
-  /* ── Footer ── */
-  --color-footer: #92735E;
-  --color-footer-text: #F5F5EC;
+  /* ── Layout ── */
+  --gutter: clamp(0.625rem, 0.4rem + 0.9vw, 1.25rem);
+  --pad: clamp(1.5rem, 0.9rem + 2.6vw, 4rem);
+  --header-h: 3.75rem;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --max-w: 1760px;
+
+  /* ── Motion ── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 900ms;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 4.25rem;
+  }
 }

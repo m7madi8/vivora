@@ -1,0 +1,145 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+@import "../src/styles/tokens.css";
+
+:root {
+  --hero-cream: #f2eeed;
+  --hero-dark: #2a2a2a;
+  --font-brand: var(--font-montserrat), system-ui, sans-serif;
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.font-brand {
+  font-family: var(--font-brand);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: var(--color-bark);
+  font-family: var(--font-dm), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Visible keyboard focus everywhere; colour follows the surface it sits on. */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.image-showcase {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(30, 28, 26, 0.1);
+}
+
+.image-frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(30, 28, 26, 0.08);
+}
+
+.image-frame.shadow-none {
+  box-shadow: none;
+}
+
+/* Anchored sections clear the fixed header. */
+.anchor-section,
+#products {
+  scroll-margin-top: 64px;
+}
+
+/* Skip link */
+.skip-link {
+  position: fixed;
+  left: 12px;
+  top: -64px;
+  z-index: 60;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  padding: 12px 16px;
+  font-size: 14px;
+  transition: top 0.2s var(--ease-out-soft);
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+/* ── Hero motion: transform + opacity only ── */
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroSettle {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.hero-rise {
+  opacity: 0;
+  animation: heroRise 0.9s var(--ease-out-soft) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+.hero-settle {
+  animation: heroSettle 2.4s var(--ease-out-soft) both;
+}
+
+/* ── Menu drawer ── */
+@keyframes menuIn {
+  from {
+    opacity: 0;
+    transform: translate3d(-16px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+dialog.menu-drawer[open] {
+  animation: menuIn 0.35s var(--ease-out-soft);
+}
+
+/* Users who ask for less motion get the final state immediately. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

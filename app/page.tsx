@@ -1,23 +1,35 @@
+import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/Hero";
-import BrandSection from "@/components/BrandSection";
 import ProductsSection from "@/components/ProductsSection";
-import IngredientsSection from "@/components/IngredientsSection";
-import JournalSection from "@/components/JournalSection";
-import InstagramSection from "@/components/InstagramSection";
+import BrandSection from "@/components/BrandSection";
+import LinesSection from "@/components/LinesSection";
+import FilmSection from "@/components/FilmSection";
 import NewsletterSection from "@/components/NewsletterSection";
 import SiteFooter from "@/components/SiteFooter";
+import BagDrawer from "@/components/cart/BagDrawer";
+import BagAnnouncer from "@/components/cart/BagAnnouncer";
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-[430px]">
-      <Hero />
-      <BrandSection />
-      <ProductsSection />
-      <IngredientsSection />
-      <JournalSection />
-      <InstagramSection />
-      <NewsletterSection />
+    <>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
+
+      <SiteHeader />
+
+      <main id="main">
+        <Hero />
+        <ProductsSection />
+        <BrandSection />
+        <LinesSection />
+        <FilmSection />
+        <NewsletterSection />
+      </main>
+
       <SiteFooter />
-    </main>
+      <BagDrawer />
+      <BagAnnouncer />
+    </>
   );
 }
